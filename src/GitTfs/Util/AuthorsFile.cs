@@ -177,19 +177,19 @@ namespace GitTfs.Util
 
         public void SaveAuthorFileInRepository(string authorsFilePath, string gitDir)
         {
-            if(string.IsNullOrWhiteSpace(authorsFilePath))
-                return;
+            //if(string.IsNullOrWhiteSpace(authorsFilePath))
+            //    return;
 
-            var savedAuthorFile = GetSavedAuthorFilePath(gitDir);
-            try
-            {
-                File.Copy(authorsFilePath, savedAuthorFile, true);
-            }
-            catch (Exception)
-            {
-                Trace.TraceWarning("Failed to copy authors file from \"" + authorsFilePath + "\" to \"" +
-                                   savedAuthorFile + "\".");
-            }
+            //var savedAuthorFile = GetSavedAuthorFilePath(gitDir);
+            //try
+            //{
+            //    File.Copy(authorsFilePath, savedAuthorFile, true);
+            //}
+            //catch (Exception)
+            //{
+            //    Trace.TraceWarning("Failed to copy authors file from \"" + authorsFilePath + "\" to \"" +
+            //                       savedAuthorFile + "\".");
+            //}
         }
 
         public bool LoadAuthorsFromSavedFile(string gitDir)
