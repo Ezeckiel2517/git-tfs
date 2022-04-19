@@ -762,10 +762,12 @@ namespace GitTfs.Core
             {
                 Trace.TraceWarning("warning: the .gitignore file specified '{0}' does not exist!", pathToGitIgnoreFile);
             }
+            var authorName = GetConfig<string>("user.name");
+            var authorEmail = GetConfig<string>("user.email");
             var gitTreeBuilder = new GitTreeBuilder(_repository.ObjectDatabase);
             gitTreeBuilder.Add(".gitignore", pathToGitIgnoreFile, LibGit2Sharp.Mode.NonExecutableFile);
             var tree = gitTreeBuilder.GetTree();
-            var signature = new Signature("git-tfs", "git-tfs@noreply.com", new DateTimeOffset(2000, 1, 1, 0, 0, 0, new TimeSpan(0)));
+            var signature = new Signature(authorName, authorEmail, new DateTimeOffset(2000, 1, 1, 0, 0, 0, new TimeSpan(0)));
             var sha = _repository.ObjectDatabase.CreateCommit(signature, signature, ".gitignore", tree, new Commit[0], false).Sha;
             Trace.WriteLine(".gitignore commit created: " + sha);
 
