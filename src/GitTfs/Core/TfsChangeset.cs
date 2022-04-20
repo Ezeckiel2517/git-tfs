@@ -229,7 +229,7 @@ namespace GitTfs.Core
             return new LogEntry
             {
                 Date = changesetToLog.CreationDate,
-                Log = changesetToLog.Comment + Environment.NewLine,
+                Log = changesetToLog.Comment,
                 ChangesetId = changesetToLog.ChangesetId,
                 CommitterName = name,
                 AuthorName = name,

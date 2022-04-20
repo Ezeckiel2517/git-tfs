@@ -511,7 +511,7 @@ namespace GitTfs.Core
                         log.Log += "\nWorkitems:";
                         foreach (var workItem in workItems)
                         {
-                            log.Log += "\n#" + workItem.Id + " " + workItem.Title;
+                            log.Log += " #" + workItem.Id + " " + workItem.Title;
                         }
                     }
                 }
@@ -875,11 +875,11 @@ namespace GitTfs.Core
 
         private string BuildCommitMessage(string tfsCheckinComment, int changesetId)
         {
-            var builder = new StringWriter();
-            builder.WriteLine(tfsCheckinComment);
-            builder.WriteLine(GitTfsConstants.TfsCommitInfoFormat,
-                TfsUrl, TfsRepositoryPath, changesetId);
-            return builder.ToString();
+            //var builder = new StringWriter();
+            //builder.WriteLine(tfsCheckinComment);
+            //builder.WriteLine(GitTfsConstants.TfsCommitInfoFormat, TfsUrl, TfsRepositoryPath, changesetId);
+            //return builder.ToString();
+            return tfsCheckinComment.Trim();
         }
 
         public void Unshelve(string shelvesetOwner, string shelvesetName, string destinationBranch, Action<Exception> ignorableErrorHandler, bool force)
