@@ -516,8 +516,8 @@ namespace GitTfs.Core
                     }
                 }
 
-                if (!string.IsNullOrWhiteSpace(changeset.Summary.PolicyOverrideComment))
-                    log.Log += "\n" + GitTfsConstants.GitTfsPolicyOverrideCommentPrefix + " " + changeset.Summary.PolicyOverrideComment;
+                //if (!string.IsNullOrWhiteSpace(changeset.Summary.PolicyOverrideComment))
+                //    log.Log += "\n" + GitTfsConstants.GitTfsPolicyOverrideCommentPrefix + " " + changeset.Summary.PolicyOverrideComment;
 
                 foreach (var checkinNote in changeset.Summary.CheckinNotes)
                 {
