@@ -12,6 +12,15 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <None Include="..\..\run\authors.txt" Link="authors.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\run\cleanup.bat" Link="cleanup.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\run\VisualStudio.gitignore.txt" Link="VisualStudio.gitignore.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\..\LICENSE">
       <Link>LICENSE</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
