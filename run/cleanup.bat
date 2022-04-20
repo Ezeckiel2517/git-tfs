@@ -6,3 +6,5 @@ git config --remove-section tfs-remote.default
 rd .git\refs\remotes /S/Q
 rd .git\logs\refs\remotes /S/Q
 cd ..
+
+PAUSE
