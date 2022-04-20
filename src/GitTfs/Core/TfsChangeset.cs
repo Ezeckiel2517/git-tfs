@@ -37,13 +37,15 @@ namespace GitTfs.Core
                 IsRenameChangeset = true;
             }
             _changeset.Get(workspace, sieve.GetChangesToFetch(), ignorableErrorHandler);
-            foreach (var change in sieve.GetChangesToApply())
+            var changes = sieve.GetChangesToApply();
+            foreach (var change in changes)
             {
                 ignorableErrorHandler.Catch(() =>
                 {
                     Apply(change, treeBuilder, workspace, initialTree);
                 });
             }
+            IsEmptyChangeset = !changes.Any(c => c.Type != ChangeType.Ignore);
             return MakeNewLogEntry();
         }
 
@@ -241,5 +243,6 @@ namespace GitTfs.Core
 
         public string OmittedParentBranch { get; set; }
         public bool IsRenameChangeset { get; set; }
+        public bool IsEmptyChangeset { get; set; }
     }
 }

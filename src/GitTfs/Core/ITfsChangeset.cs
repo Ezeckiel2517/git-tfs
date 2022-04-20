@@ -31,5 +31,10 @@ namespace GitTfs.Core
         string OmittedParentBranch { get; set; }
 
         bool IsRenameChangeset { get; set; }
+
+        /// <summary>
+        /// Changeset files are filtered
+        /// </summary>
+        bool IsEmptyChangeset { get; set; }
     }
 }

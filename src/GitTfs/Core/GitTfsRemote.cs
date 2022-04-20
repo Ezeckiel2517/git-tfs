@@ -398,32 +398,35 @@ namespace GitTfs.Core
                     var parentSha = (renameResult != null && renameResult.IsProcessingRenameChangeset) ? renameResult.LastParentCommitBeforeRename : MaxCommitHash;
                     var isFirstTFSCommitInRepository = (MaxChangesetId == 0);
                     var log = Apply(parentSha, changeset, objects);
-                    if (changeset.IsRenameChangeset && !isFirstTFSCommitInRepository)
+                    if (!changeset.IsEmptyChangeset)
                     {
-                        if (renameResult == null || !renameResult.IsProcessingRenameChangeset)
+                        if (changeset.IsRenameChangeset && !isFirstTFSCommitInRepository)
                         {
-                            fetchResult.IsProcessingRenameChangeset = true;
-                            fetchResult.LastParentCommitBeforeRename = MaxCommitHash;
-                            return fetchResult;
+                            if (renameResult == null || !renameResult.IsProcessingRenameChangeset)
+                            {
+                                fetchResult.IsProcessingRenameChangeset = true;
+                                fetchResult.LastParentCommitBeforeRename = MaxCommitHash;
+                                return fetchResult;
+                            }
+                            renameResult.IsProcessingRenameChangeset = false;
+                            renameResult.LastParentCommitBeforeRename = null;
                         }
-                        renameResult.IsProcessingRenameChangeset = false;
-                        renameResult.LastParentCommitBeforeRename = null;
+                        if (parentCommitSha != null)
+                            log.CommitParents.Add(parentCommitSha);
+                        if (changeset.Summary.ChangesetId == mergeChangesetId)
+                        {
+                            foreach (var parent in parentCommitsHashes)
+                                log.CommitParents.Add(parent);
+                        }
+                        var commitSha = ProcessChangeset(changeset, log);
+                        // set commit sha for added git objects
+                        foreach (var commit in objects)
+                        {
+                            if (commit.Value.Commit == null)
+                                commit.Value.Commit = commitSha;
+                        }
                     }
-                    if (parentCommitSha != null)
-                        log.CommitParents.Add(parentCommitSha);
-                    if (changeset.Summary.ChangesetId == mergeChangesetId)
-                    {
-                        foreach (var parent in parentCommitsHashes)
-                            log.CommitParents.Add(parent);
-                    }
-                    var commitSha = ProcessChangeset(changeset, log);
                     fetchResult.LastFetchedChangesetId = changeset.Summary.ChangesetId;
-                    // set commit sha for added git objects
-                    foreach (var commit in objects)
-                    {
-                        if (commit.Value.Commit == null)
-                            commit.Value.Commit = commitSha;
-                    }
                     DoGcIfNeeded();
                 }
             } while (fetchRetrievedChangesets && latestChangesetId > fetchResult.LastFetchedChangesetId);
