@@ -528,42 +528,44 @@ namespace GitTfs.Core
 
             var commitSha = Commit(log);
             UpdateTfsHead(commitSha, changeset.Summary.ChangesetId);
-            StringBuilder metadatas = new StringBuilder();
-            if (changeset.Summary.Workitems.Any())
-            {
-                string workitemNote = "Workitems:\n";
-                foreach (var workitem in changeset.Summary.Workitems)
-                {
-                    var workitemId = workitem.Id.ToString();
-                    var workitemUrl = workitem.Url;
-                    if (ExportMetadatas && ExportWorkitemsMapping.Count != 0)
-                    {
-                        if (ExportWorkitemsMapping.ContainsKey(workitemId))
-                        {
-                            var oldWorkitemId = workitemId;
-                            workitemId = ExportWorkitemsMapping[workitemId].Id;
-                            workitemUrl = workitemUrl.Replace(oldWorkitemId, workitemId);
-                        }
-                    }
-                    workitemNote += string.Format("[{0}] {1}\n    {2}\n", workitemId, workitem.Title, workitemUrl);
-                }
-                metadatas.Append(workitemNote);
-            }
 
-            if (!string.IsNullOrWhiteSpace(changeset.Summary.PolicyOverrideComment))
-                metadatas.Append("\nPolicy Override Comment: " + changeset.Summary.PolicyOverrideComment);
+            //StringBuilder metadatas = new StringBuilder();
+            //if (changeset.Summary.Workitems.Any())
+            //{
+            //    string workitemNote = "Workitems:\n";
+            //    foreach (var workitem in changeset.Summary.Workitems)
+            //    {
+            //        var workitemId = workitem.Id.ToString();
+            //        var workitemUrl = workitem.Url;
+            //        if (ExportMetadatas && ExportWorkitemsMapping.Count != 0)
+            //        {
+            //            if (ExportWorkitemsMapping.ContainsKey(workitemId))
+            //            {
+            //                var oldWorkitemId = workitemId;
+            //                workitemId = ExportWorkitemsMapping[workitemId].Id;
+            //                workitemUrl = workitemUrl.Replace(oldWorkitemId, workitemId);
+            //            }
+            //        }
+            //        workitemNote += string.Format("[{0}] {1}\n    {2}\n", workitemId, workitem.Title, workitemUrl);
+            //    }
+            //    metadatas.Append(workitemNote);
+            //}
 
-            foreach (var checkinNote in changeset.Summary.CheckinNotes)
-            {
-                if (!string.IsNullOrWhiteSpace(checkinNote.Name) && !string.IsNullOrWhiteSpace(checkinNote.Value))
-                    metadatas.Append("\n" + checkinNote.Name + ": " + checkinNote.Value);
-            }
+            //if (!string.IsNullOrWhiteSpace(changeset.Summary.PolicyOverrideComment))
+            //    metadatas.Append("\nPolicy Override Comment: " + changeset.Summary.PolicyOverrideComment);
 
-            if (!string.IsNullOrWhiteSpace(changeset.OmittedParentBranch))
-                metadatas.Append("\nOmitted parent branch: " + changeset.OmittedParentBranch);
+            //foreach (var checkinNote in changeset.Summary.CheckinNotes)
+            //{
+            //    if (!string.IsNullOrWhiteSpace(checkinNote.Name) && !string.IsNullOrWhiteSpace(checkinNote.Value))
+            //        metadatas.Append("\n" + checkinNote.Name + ": " + checkinNote.Value);
+            //}
 
-            if (metadatas.Length != 0)
-                Repository.CreateNote(commitSha, metadatas.ToString(), log.AuthorName, log.AuthorEmail, log.Date);
+            //if (!string.IsNullOrWhiteSpace(changeset.OmittedParentBranch))
+            //    metadatas.Append("\nOmitted parent branch: " + changeset.OmittedParentBranch);
+
+            //if (metadatas.Length != 0)
+            //    Repository.CreateNote(commitSha, metadatas.ToString(), log.AuthorName, log.AuthorEmail, log.Date);
+
             return commitSha;
         }
 
