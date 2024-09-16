@@ -1,3 +1,4 @@
 veis5208@bba.ca = Sébastien Veilleux <sebastien.veilleux@bba.ca>
 gaum0714@bba.ca = Maxime Gauthier <Maxime.Gauthier@bba.ca>
 prom3033@bba.ca = Michel Provost <Michel.Provost@bba.ca>
+casf0335@bba.ca = Francis Castonguay <Francis.Castonguay@bba.ca>
