@@ -508,13 +508,31 @@ namespace GitTfs.Core
             {
                 if (changeset.Summary.Workitems.Any())
                 {
-                    var workItems = TranslateWorkItems(changeset.Summary.Workitems.Select(wi => new ExportWorkItem(wi)));
-                    if (workItems != null)
+                    var workItems = TranslateWorkItems(changeset.Summary.Workitems.Select(wi => new ExportWorkItem(wi))).ToList();
+                    if (workItems.Any())
                     {
-                        log.Log += "\nWorkitems:";
-                        foreach (var workItem in workItems)
+                        // ORIGINAL
+                        //log.Log += "\nWorkitems:";
+                        //foreach (var workItem in workItems)
+                        //{
+                        //    log.Log += " #" + workItem.Id + " " + workItem.Title;
+                        //}
+                        
+                        // BBA
+                        // When no comment, use workitem text and id
+                        if (string.IsNullOrWhiteSpace(log.Log))
                         {
-                            log.Log += " #" + workItem.Id + " " + workItem.Title;
+                            log.Log = workItems[0].Title + " #" + workItems[0].Id;
+                            for (int i = 1; i < workItems.Count; i++)
+                                log.Log += "\n" + workItems[i].Title + " #" + workItems[i].Id;
+                        }
+                        else
+                        {
+                            // If there is a comment, only append workitem id
+                            foreach (var workItem in workItems)
+                            {
+                                log.Log += " #" + workItem.Id;
+                            }
                         }
                     }
                 }
