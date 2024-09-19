@@ -251,6 +251,9 @@ namespace GitTfs.Commands
                 ? tfsRepositoryPath.Remove(0, tfsRepositoryPath.IndexOf('/', 2) + 1)
                 : tfsRepositoryPath;
 
+            if (gitBranchNameExpected.Contains("/"))
+                gitBranchNameExpected = gitBranchNameExpected.Substring(gitBranchNameExpected.LastIndexOf("/") + 1);
+
             return gitBranchNameExpected.ToGitRefName();
         }
 
